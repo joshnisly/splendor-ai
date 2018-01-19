@@ -23,6 +23,7 @@ class SplendorGame(object):
             'j': 5
         }
         self._journal = []
+        self._current_player_index = None
 
     def init_random(self):
         for level_cards in self._cards:
@@ -40,7 +41,24 @@ class SplendorGame(object):
             'state': PlayerState()
         })
         self._limit_gems()
+        self._current_player_index = random.randrange(0, len(self._players))
 
+    # Interactive playing
+    def record_action(self, player_id, actions):
+        player = self._players[self._current_player_index]
+        assert player['id'] == player_id
+        self._validate_actions(player['state'], actions)
+        self._journal.append({
+            'player': player['id'],
+            'actions': actions
+        })
+        self._apply_actions(player, actions)
+
+        self._current_player_index += 1
+        if self._current_player_index >= len(self._players):
+            self._current_player_index = 0
+
+    # AI playing
     def play_game(self):
         assert 4 >= len(self._players) >= 2
 
