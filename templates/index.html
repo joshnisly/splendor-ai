@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Splendor game</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/global.css"/>
+</head>
+<body>
+
+    <h2>Splendor!!1</h2>
+
+    <h3>Nobles</h3>
+    {% for noble in state['nobles'] %}
+        <div class="noble-tile" style="position: relative">
+            <div class="points">{{ noble.points }}</div>
+
+            <div class="cost-wrapper">
+                {% for color in noble.cost %}
+                    <div class="noble-cost" style="background-color: {{ colors[color] }}">
+                        {{ noble.cost[color] }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <h3>Cards</h3>
+    {% for level_cards in state['cards']|reverse %}
+        <div class="game-level">
+        {% for card in level_cards %}
+            <div class="card" style="position: relative">
+                <div class="points">{{ card.points }}</div>
+
+                <div class="card-color-swatch" style="background-color: {{ colors[card.color] }}"></div>
+
+                <div class="cost-wrapper">
+                    {% for color in card.cost %}
+                        <div class="noble-cost" style="background-color: {{ colors[color] }}">
+                            {{ card.cost[color] }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+    <h3>Cards</h3>
+    {% for color, count in state['gems']|dictsort %}
+        <div class="gem" style="background-color: {{ colors[color] }}">{{ state['gems'][color] }}</div>
+    {% endfor %}
+
+</body>
+</html>
