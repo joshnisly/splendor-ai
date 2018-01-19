@@ -9,6 +9,15 @@ COLORS = {
     'j': 'joker'
 }
 
+COLOR_VALUES = {
+    'w': '#FFF',
+    'g': '#0F0',
+    'b': '#00F',
+    'r': '#F00',
+    'a': '#444',
+    'j': '#FF0'
+}
+
 
 class Card(object):
     def __init__(self, points, color, cost_dict):
@@ -18,9 +27,9 @@ class Card(object):
 
     def __str__(self):
         return '(%s - %i - %s)' % (
-            COLORS[self._color],
-            self._points,
-            ' '.join(['%s:%i' % (COLORS[x], self._cost[x]) for x in self._cost])
+            COLORS[self.color],
+            self.points,
+            ' '.join(['%s:%i' % (COLORS[x], self.cost[x]) for x in self.cost])
         )
 
     def __repr__(self):
@@ -29,13 +38,13 @@ class Card(object):
 
 class Noble(object):
     def __init__(self, points, cost_dict):
-        self._points = points
-        self._cost = cost_dict
+        self.points = points
+        self.cost = cost_dict
 
     def __str__(self):
         return '(%i points) %s' % (
-            self._points,
-            ' '.join(['%s:%i' % (x, self._cost[x]) for x in self._cost])
+            self.points,
+            ' '.join(['%s:%i' % (x, self.cost[x]) for x in self.cost])
         )
 
     def __repr__(self):

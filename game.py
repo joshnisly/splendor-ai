@@ -43,6 +43,13 @@ class SplendorGame(object):
         self._limit_gems()
         self._current_player_index = random.randrange(0, len(self._players))
 
+    def get_game_state(self):
+        return {
+            'cards': [level_cards[-4:] for level_cards in self._cards],
+            'nobles': self._nobles[-len(self._players)-1:],
+            'gems': dict(self._available_gems)
+        }
+
     # Interactive playing
     def record_action(self, player_id, actions):
         player = self._players[self._current_player_index]
@@ -74,12 +81,6 @@ class SplendorGame(object):
                 player.set_state(player['state'])
 
     # Implementation
-    def _get_game_state(self):
-        return {
-            'cards': [level_cards[-4:] for level_cards in self._cards],
-            'nobles': self._nobles[-3:],
-            'gems': dict(self._available_gems)
-        }
 
     @staticmethod
     def _secure_shuffle(cards):
@@ -87,15 +88,16 @@ class SplendorGame(object):
         random.shuffle(cards, secure_random.random)
 
     def _limit_gems(self):
-        if len(self._players) < 4:
-            max_gems = 5
-        elif len(self._players) < 3:
+        if len(self._players) < 3:
             max_gems = 4
+        elif len(self._players) < 4:
+            max_gems = 5
         else:
             return
 
         for color in self._available_gems:
-            self._available_gems[color] = max_gems
+            if color != 'j':
+                self._available_gems[color] = max_gems
 
     @staticmethod
     def _validate_player_state(player):
@@ -109,7 +111,7 @@ class SplendorGame(object):
             assert actions[0].type == 'discard_gems' or \
                     actions[1].type == 'discard_gems'
 
-        game_state = self._get_game_state()
+        game_state = self.get_game_state()
         for action in actions:
             if action.type == 'draw_gems':
                 # Make sure they don't go over 10 cards
