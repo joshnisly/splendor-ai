@@ -3,6 +3,13 @@ BODY
     margin: 1em;
 }
 
+.game-cell
+{
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+}
+
 .noble-tile
 {
     height: 100px;
@@ -31,6 +38,9 @@ BODY
 {
     font-size: 20px;
     font-style: italic;
+    position: absolute;
+    top: 3px;
+    left: 5px;
 
     color: white;
     text-shadow:
@@ -80,3 +90,4 @@ BODY
     display: inline-block;
     margin: 5px;
 }
+

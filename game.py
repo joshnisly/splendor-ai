@@ -47,7 +47,8 @@ class SplendorGame(object):
         return {
             'cards': [level_cards[-4:] for level_cards in self._cards],
             'nobles': self._nobles[-len(self._players)-1:],
-            'gems': dict(self._available_gems)
+            'gems': dict(self._available_gems),
+            'players': [x['state'] for x in self._players]
         }
 
     # Interactive playing
@@ -225,7 +226,7 @@ class ReserveCard(PlayerAction):
 class PlayerState(object):
     def __init__(self):
         self.cards = []
-        self.gems = []
+        self.gems = {}
         self.reserved_cards = []
 
 

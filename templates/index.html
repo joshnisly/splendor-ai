@@ -11,46 +11,62 @@
 
     <h2>Splendor!!1</h2>
 
-    <h3>Nobles</h3>
-    {% for noble in state['nobles'] %}
-        <div class="noble-tile" style="position: relative">
-            <div class="points">{{ noble.points }}</div>
-
-            <div class="cost-wrapper">
-                {% for color in noble.cost %}
-                    <div class="noble-cost" style="background-color: {{ colors[color] }}">
-                        {{ noble.cost[color] }}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endfor %}
-
-    <h3>Cards</h3>
-    {% for level_cards in state['cards']|reverse %}
-        <div class="game-level">
-        {% for card in level_cards %}
-            <div class="card" style="position: relative">
-                <div class="points">{{ card.points }}</div>
-
-                <div class="card-color-swatch" style="background-color: {{ colors[card.color] }}"></div>
+    <div class="game-cell">
+        <h3>Nobles</h3>
+        {% for noble in state['nobles'] %}
+            <div class="noble-tile" style="position: relative">
+                <div class="points">{{ noble.points }}</div>
 
                 <div class="cost-wrapper">
-                    {% for color in card.cost %}
-                        <div class="noble-cost" style="background-color: {{ colors[color] }}">
-                            {{ card.cost[color] }}
+                    {% for color in noble.cost %}
+                        <div class="noble-cost" style="background-color: {{ colors[color] }}; color: {{ font_colors[color] }}">
+                            {{ noble.cost[color] }}
                         </div>
                     {% endfor %}
                 </div>
             </div>
         {% endfor %}
-        </div>
-    {% endfor %}
 
-    <h3>Cards</h3>
-    {% for color, count in state['gems']|dictsort %}
-        <div class="gem" style="background-color: {{ colors[color] }}">{{ state['gems'][color] }}</div>
-    {% endfor %}
+        <h3>Cards</h3>
+        {% for level_cards in state['cards']|reverse %}
+            <div class="game-level">
+            {% for card in level_cards %}
+                <div class="card" style="position: relative">
+                    {% if card.points %}
+                    <div class="points">{{ card.points }}</div>
+                    {% endif %}
+
+                    <div class="card-color-swatch" style="background-color: {{ colors[card.color] }}; color: {{ font_colors[card.color] }}"></div>
+
+                    <div class="cost-wrapper">
+                        {% for color in card.cost %}
+                            <div class="noble-cost" style="background-color: {{ colors[color] }}; color: {{ font_colors[color] }}">
+                                {{ card.cost[color] }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h3>Cards</h3>
+        {% for color, count in state['gems']|dictsort %}
+            {% if color != 'j' %}
+            <div class="gem" style="background-color: {{ colors[color] }}; color: {{ font_colors[color] }}">{{ state['gems'][color] }}</div>
+            {% endif %}
+        {% endfor %}
+        <div class="gem" style="margin-left: 2em; background-color: {{ colors['j'] }}">{{ state['gems']['j'] }}</div>
+    </div>
+    <div class="game-cell">
+        <h3>Players</h3>
+        {% for player in state['players'] %}
+            <h4>Player {{ loop.index }}</h4>
+            {% for color, count in player.gems|dictsort %}
+                <div class="gem" style="background-color: {{ colors[color] }}; color: {{ font_colors[color] }}">{{ player.gems[color] }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
 
 </body>
 </html>

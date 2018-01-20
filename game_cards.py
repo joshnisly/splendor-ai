@@ -18,6 +18,15 @@ COLOR_VALUES = {
     'j': '#FF0'
 }
 
+FONT_COLOR_VALUES = {
+    'w': '#000',
+    'g': '#000',
+    'b': '#FFF',
+    'r': '#000',
+    'a': '#FFF',
+    'j': '#000'
+}
+
 
 class Card(object):
     def __init__(self, points, color, cost_dict):

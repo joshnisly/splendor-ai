@@ -18,7 +18,8 @@ def index():
     game_state = THE_GAME.get_game_state()
     return flask.render_template('index.html', **{
         'state': game_state,
-        'colors': game_cards.COLOR_VALUES
+        'colors': game_cards.COLOR_VALUES,
+        'font_colors': game_cards.FONT_COLOR_VALUES
     })
 
 
